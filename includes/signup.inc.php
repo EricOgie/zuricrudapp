@@ -11,8 +11,8 @@ if(isset($_POST["submit"])){
 
  //------------------- Error Handling-------------
 
- require_once 'dbhandler.inc.php';
- require_once 'testcodes.inc.php';
+ require 'dbhandler.inc.php';
+ require 'testcodes.inc.php';
 
   if (isAnyInputEmpty($fName, $lName, $userName, $email, $pWord) === true) {
       header("location: ../signup.php?error=emptyinpute");
@@ -47,16 +47,13 @@ if(isset($_POST["submit"])){
 
   createUser($conn, $fName, $lName, $userName, $email, $pWord);
 
-}else {
-  header("location: ../signup.php");
-  exit();
-}
-
-if(isset($_POST["reset"])) {
-
+}elseif (isset($_POST["reset"])) {
   $userName = $_POST["uName"];
   $pWord = $_POST["pWord"];
   $confirmPWord = $_POST["cpWord"];
+
+  require 'dbhandler.inc.php';
+  require 'testcodes.inc.php';
 
   if (isAnyInputEmptyReset($userName,$confirmPWord, $pWord) === true) {
       header("location: ../resetpassword.php?error=emptyinpute");
@@ -68,11 +65,14 @@ if(isset($_POST["reset"])) {
       exit();
   }
 
-  if (isUserExistPrior($userName, $conn, $email) === false) {
+  if (isUserExistPrior($userName, $conn, $userName) === false) {
       header("location: ../resetpassword.php?error=nouser");
       exit();
   }
 
   resetpassword($conn, $userName, $pWord );
 
+}else {
+  header("location: ../signup.php");
+  exit();
 }

@@ -26,7 +26,7 @@
            break;
 
          case 'updated':
-           echo "<p style='color: red; text-align: center'>Password Updated Successfully</p>";
+           echo "<p style='color: green; text-align: center'>Your password has been changed</p>";
            break;
 
          default:
@@ -41,7 +41,7 @@
 
 
      <div class="form-floating">
-       <input type="text" name="uName" class="form-control item" id="floatingInput" placeholder="username or email">
+       <input type="text" name="uName" class="form-control item" id="floatingInput" placeholder="username">
      </div>
 
      <div class="form-floating">

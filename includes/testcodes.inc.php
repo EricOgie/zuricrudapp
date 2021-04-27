@@ -18,6 +18,14 @@ function isAnyInputEmptyLogin( $userName, $pWord){
   }
 }
 
+function isAnyInputEmptyReset($userName, $confirmPWord, $pWord){
+  if (empty($userName) || empty($pWord) || empty($confirmPWord)) {
+    return true;
+  }else {
+    return false;
+  }
+}
+
 function isInvalidUid($userName){
   $result;
   $matchPragPram = "/^[a-zA-Z0-9]*$/";
@@ -116,20 +124,43 @@ function createUser($conn, $fName, $lName, $userName, $email, $pWord){
 }
 
 
- function resetpassword($conn, $userName, $pWord ){
-   $encryptedPw = password_hash($pWord, PASSWORD_DEFAULT);
-   $sql = "UPDATE users SET userpassword=$encryptedPw WHERE userUid=$userName OR userEmail=$userName;";
-   $updateResult = mysqli_query($conn, $sql);
+function resetpassword($conn, $userName, $pWord){
 
-   if ($updateResult) {
-       header("location: ../login.php?error=updated");
-       exit();
-   }else {
-     header("location: ../login.php?error=failure");
-     exit();
-   }
+    $encryptedPw = password_hash($pWord, PASSWORD_DEFAULT); // password_hash for upping security
+    $sql = "UPDATE users SET userpassword=? WHERE userUid=?;";
+    $stmt = mysqli_stmt_init($conn);
 
- }
+    if (!mysqli_stmt_prepare($stmt, $sql)) { // check for query statement error
+      header("location: ../resetpassword.php?error=stmterror");
+      exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "ss", $userName, $encryptedPw ); // params: stmt, type of user data entered*numbers, user data passed
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt); // Close connecton
+    // Login user
+    header("location: ../resetpassword.php?error=updated");
+
+
+}
+
+
+ // function resetpassword($conn, $userName, $pWord ){
+ //   $encryptedPw = password_hash($pWord, PASSWORD_DEFAULT);
+ //   $sql = "UPDATE users SET userpassword=$encryptedPw WHERE userUid=$userName;";
+ //
+ //
+ //   if (mysqli_query($conn, $sql)) {
+ //     echo "YESSSS";
+ //       // header("location: ../login.php?error=updated");
+ //       // exit();
+ //   }else {
+ //     echo "NOOO";
+ //     // header("location: ../login.php?error=failure");
+ //     // exit();
+ //   }
+ //
+ // }
 
 
 
