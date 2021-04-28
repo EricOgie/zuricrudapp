@@ -35,6 +35,13 @@
        }
      }
     ?>
+ <!---Alart------------------>
+    <?php if (isset($_SESSION['res-paword'])) { ?>
+    <div class="alert alert-<?= $_SESSION['res_type']; ?> alert-dismissible text-center">
+     <button type="button" class="close" data-dismiss="alert">&times;</button>
+     <?= $_SESSION['res']; ?>
+   </div>
+ <?php } unset($_SESSION['res-paword']); unset($_SESSION['res_type']); ?>
 
    <form action="includes/signup.inc.php" method="post">
      <h1 class="h3 mb-3 fw-normal form-xtras">Reset Your Password</h1>

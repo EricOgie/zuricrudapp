@@ -45,7 +45,8 @@ if(isset($_POST["submit"])){
   }
 
 
-  createUser($conn, $fName, $lName, $userName, $email, $pWord);
+  // createUser($conn, $fName, $lName, $userName, $email, $pWord);
+  saveUser($conn, $fName, $lName, $userName, $email, $pWord);
 
 }elseif (isset($_POST["reset"])) {
   $userName = $_POST["uName"];
