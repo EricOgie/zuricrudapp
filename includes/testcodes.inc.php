@@ -82,7 +82,6 @@ function isUserExistPrior($userName, $conn, $email){
   $result;
   $sqlQuery = "SELECT * FROM users WHERE userUid = ? OR userEmail = ? ;";
   $stmt = mysqli_stmt_init($conn);
-
   if (!mysqli_stmt_prepare($stmt, $sqlQuery)) { // check for query statement error
     header("location: ../signup.php?error=stmterror");
     exit();
@@ -120,13 +119,14 @@ function resetpassword($conn, $userName, $pWord){
     $stmt->execute();
     // set Some session variables for alert
     $_SESSION['res_type'] = "success";
-    $_SESSION['res'] = "Your password has been chenged. Proceed to Sign-In";
+    $_SESSION['res-paword'] = "Your password has been chenged. Proceed to Sign-In";
+    $conn->close();
     header("location: ../resetpassword.php?error=updated");
     exit();
 
 }
 
- function loginUserIn($conn, $userName, $pWord ){
+function loginUserIn($conn, $userName, $pWord ){
 
    $userDataorFalse = isUserExistPrior($userName, $conn, $userName); // return false or UserData as assoc
    // recall $sqlQuery used ^^ is conditioned to search with respect to either $email or $userName
@@ -149,7 +149,7 @@ function resetpassword($conn, $userName, $pWord){
    }
  }
 
-  function sendToDashBoard($userData){
+function sendToDashBoard($userData){
 
     $_SESSION["name"] = $userData["userFirstName"];
     $_SESSION["id"] = $userData["userId"];
@@ -160,3 +160,18 @@ function resetpassword($conn, $userName, $pWord){
     }
 
   }
+
+function addDefaultCourse($conn, $userName,){
+     $DefaultCourses = ["HTML For Web Development", "Basic CSS For Web"];
+     foreach ($DefaultCourses as $course) {
+       $userData = isUserExistPrior($userName, $conn, $userName);
+       $userId = $userData["userId"];
+       $query = "INSERT INTO usercourses (coursName, courseInstructor, courseDuration, courseUserId)
+       VALUES(?,?,?,?)";
+       $stmt = $conn->prepare($query);
+       $stmt->bind_param("sssi", $course, "Tomiwa Ajayi", "2-Months", $userId);
+       $stmt->execute();
+
+     }
+
+ }

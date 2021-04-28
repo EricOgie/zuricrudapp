@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 if(isset($_POST["submit"])){
 
   $fName = $_POST["fName"];
@@ -47,7 +49,7 @@ if(isset($_POST["submit"])){
   saveUser($conn, $fName, $lName, $userName, $email, $pWord);
 
 }elseif (isset($_POST["reset"])) {
-  
+
   $userName = $_POST["uName"];
   $pWord = $_POST["pWord"];
   $confirmPWord = $_POST["cpWord"];
@@ -56,16 +58,25 @@ if(isset($_POST["submit"])){
   require 'testcodes.inc.php';
 
   if (isAnyInputEmptyReset($userName,$confirmPWord, $pWord) === true) {
+    // set Some session variables for alert
+    $_SESSION['res_type'] = "danger";
+    $_SESSION['res-paword'] = "All fields must be filled";
       header("location: ../resetpassword.php?error=emptyinpute");
       exit();
   }
 
   if (isPasswordMisMatch($pWord, $confirmPWord ) === true) {
+    // set Some session variables for alert
+      $_SESSION['res_type'] = "danger";
+      $_SESSION['res-paword'] = "Passwords does not match";
       header("location: ../resetpassword.php?error=passwordmismatch");
       exit();
   }
 
   if (isUserExistPrior($userName, $conn, $userName) === false) {
+    // set Some session variables for alert
+    $_SESSION['res_type'] = "danger";
+    $_SESSION['res-paword'] = "No record of this user";
       header("location: ../resetpassword.php?error=nouser");
       exit();
   }
