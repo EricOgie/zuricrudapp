@@ -1,8 +1,12 @@
 <?php
   include_once('includes/header.php');
  ?>
+ <div class="row greeting">
+   <div class="col-md-4">
+     <h2>Hello, <?php echo ''.$_SESSION["name"] ?></h2>
+   </div>
+ </div>
 
- <h2>Hello, <?php echo ''.$_SESSION["name"] ?></h2>
  <hr>
 
  <!---Alart------------------>
@@ -80,7 +84,7 @@
         <td>3-Moths</td>
         <td>
           <a href="#" class="btn btn-sm btn-success">Edit</a> &nbsp;
-          <a href="#" class="btn btn-sm btn-danger">Delete</a>
+          <a href="#" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this course?')">Delete</a>
          </td>
       </tr>
       <tr>
@@ -89,7 +93,7 @@
         <td>6-Months</td>
         <td>
           <a href="#" class="btn btn-sm btn-success">Edit</a> &nbsp;
-          <a href="#" class="btn btn-sm btn-danger">Delete</a>
+          <a href="#" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this course?')">Delete</a>
          </td>
       </tr>
 

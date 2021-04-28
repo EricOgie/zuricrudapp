@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 function isAnyInputEmpty($fName, $lName, $userName, $email, $pWord){
   $result;
   if(empty($fName) || empty($lName) || empty($userName) || empty($email) || empty($pWord)){
@@ -108,19 +110,19 @@ function saveUser($conn, $fName, $lName, $userName, $email, $pWord){
   $stmt->execute();
   loginUserIn($conn, $userName, $pWord );
 
-
 }
 
-
-
 function resetpassword($conn, $userName, $pWord){
-
     $encryptedPw = password_hash($pWord, PASSWORD_DEFAULT); // password_hash for upping security
-  
-    $stmt = mysqli_stmt_init($conn);
-
-
-
+    $sql = "UPDATE users SET userpassword=? WHERE userUid=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $encryptedPw, $userName );
+    $stmt->execute();
+    // set Some session variables for alert
+    $_SESSION['res_type'] = "success";
+    $_SESSION['res'] = "Your password has been chenged. Proceed to Sign-In";
+    header("location: ../resetpassword.php?error=updated");
+    exit();
 
 }
 
@@ -148,7 +150,7 @@ function resetpassword($conn, $userName, $pWord){
  }
 
   function sendToDashBoard($userData){
-    session_start();
+
     $_SESSION["name"] = $userData["userFirstName"];
     $_SESSION["id"] = $userData["userId"];
 

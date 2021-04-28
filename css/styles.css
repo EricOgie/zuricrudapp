@@ -66,11 +66,13 @@ body-form {
 }
 
 .footer-padding {
+  position: fixed;
 	padding-bottom: 60px;
+  background-color: #1abc9c;
 }
 
 .footer {
-	position: absolute;
+	position: fixed;
 	text-align: center;
 	bottom: 0;
 	width: 100%;

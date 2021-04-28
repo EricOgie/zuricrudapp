@@ -26,7 +26,7 @@
            break;
 
          case 'updated':
-           echo "<p style='color: green; text-align: center'>Your password has been changed</p>";
+           echo "<p style='color: green; text-align: center'>Your password Changed. Proceed to Log In</p>";
            break;
 
          default:
@@ -37,7 +37,7 @@
     ?>
  <!---Alart------------------>
     <?php if (isset($_SESSION['res-paword'])) { ?>
-    <div class="alert alert-<?= $_SESSION['res_type']; ?> alert-dismissible text-center">
+    <div class="alert alert-<?= $_SESSION['res_type']; ?> alert-dismissible fade show text-center">
      <button type="button" class="close" data-dismiss="alert">&times;</button>
      <?= $_SESSION['res']; ?>
    </div>

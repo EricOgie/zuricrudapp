@@ -44,11 +44,10 @@ if(isset($_POST["submit"])){
       exit();
   }
 
-
-  // createUser($conn, $fName, $lName, $userName, $email, $pWord);
   saveUser($conn, $fName, $lName, $userName, $email, $pWord);
 
 }elseif (isset($_POST["reset"])) {
+  
   $userName = $_POST["uName"];
   $pWord = $_POST["pWord"];
   $confirmPWord = $_POST["cpWord"];
