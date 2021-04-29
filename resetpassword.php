@@ -3,7 +3,6 @@
  ?>
 
  <!---Alart------------------>
-
   <?php if (isset($_SESSION['res-paword'])) { ?>
     <div class="alert alert-<?= $_SESSION['res_type']; ?> alert-dismissible text-center">
      <button type="button" class="close" data-dismiss="alert">&times;</button>

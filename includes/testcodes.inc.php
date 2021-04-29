@@ -140,12 +140,16 @@ function loginUserIn($conn, $userName, $pWord ){
        // everything is in order hence, we start a session and login user
        sendToDashBoard($userDataorFalse, $conn);
      }else {
-       header("location: ../login.php?error=wrongauth");
+       $_SESSION['res_type'] = "danger";
+       $_SESSION['response'] = "Incorrect username or password!";
+       header("location: ../login.php");
        exit();
      }
 
    }else {
-     header("location: ../login.php?error=nouser");
+     $_SESSION['res_type'] = "danger";
+     $_SESSION['response'] = "User Does not exit! Click SiginUp to register";
+     header("location: ../login.php");
      exit();
    }
  }
@@ -179,3 +183,15 @@ function addDefaultCourse($conn, $userName){
      }
 
  }
+
+function addCourse($conn, $name, $Instructor, $duration, $userId ){
+   $sql = "INSERT INTO usercourses(coursName,courseInstructor,courseDuration,courseUserId)
+          VALUES(?,?,?,?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssi", $name, $Instructor, $duration, $userId);
+    $stmt->execute();
+    $conn->close();
+    header("location: ../dashboard.php");
+    exit();
+
+}

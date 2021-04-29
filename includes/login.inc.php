@@ -9,7 +9,9 @@ if (isset($_POST['submit'])) {
   include 'dbhandler.inc.php';
 
   if (isAnyInputEmptyLogin( $userName, $pWord) === true) {
-      header("location: ../login.php?error=emptyinpute");
+    $_SESSION['res_type'] = "danger";
+    $_SESSION['response'] = "All fields must be filled!";
+      header("location: ../login.php");
       exit();
   }
 

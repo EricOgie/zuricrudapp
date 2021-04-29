@@ -1,6 +1,8 @@
 <?php
 
 session_start();
+require 'dbhandler.inc.php';
+require 'testcodes.inc.php';
 
 if(isset($_POST["submit"])){
 
@@ -13,36 +15,45 @@ if(isset($_POST["submit"])){
 
  //------------------- Error Handling-------------
 
- require 'dbhandler.inc.php';
- require 'testcodes.inc.php';
-
   if (isAnyInputEmpty($fName, $lName, $userName, $email, $pWord) === true) {
-      header("location: ../signup.php?error=emptyinpute");
+    $_SESSION['res_type'] = "danger";
+    $_SESSION['response'] = "All fields must be filled";
+      header("location: ../signup.php");
       exit();
   }
 
   if (isInvalidUid($userName) === true) {
-      header("location: ../signup.php?error=invaliduid");
+    $_SESSION['res_type'] = "danger";
+    $_SESSION['response'] = "Username can contain alphabets and numbers only";
+      header("location: ../signup.php");
       exit();
   }
 
   if (isInvalidEmail($email) === true) {
-      header("location: ../signup.php?error=invalidemail");
+    $_SESSION['res_type'] = "danger";
+    $_SESSION['response'] = "Invalid email format";
+      header("location: ../signup.php");
       exit();
   }
 
   if (isPasswordTooshort($pWord) === true) {
-      header("location: ../signup.php?error=passwordtooshort");
+    $_SESSION['res_type'] = "danger";
+    $_SESSION['response'] = "Error! Password should not be less than six charracters";
+      header("location: ../signup.php");
       exit();
   }
 
   if (isPasswordMisMatch($pWord, $confirmPWord ) === true) {
-      header("location: ../signup.php?error=passwordmismatch");
+    $_SESSION['res_type'] = "danger";
+    $_SESSION['response'] = "Passwords does not match";
+      header("location: ../signup.php");
       exit();
   }
 
   if (isUserExistPrior($userName, $conn, $email) !== false) {
-      header("location: ../signup.php?error=takenuid");
+    $_SESSION['res_type'] = "danger";
+    $_SESSION['response'] = "The username/password has been taken, select another one";
+      header("location: ../signup.php");
       exit();
   }
 
@@ -54,14 +65,11 @@ if(isset($_POST["submit"])){
   $pWord = $_POST["pWord"];
   $confirmPWord = $_POST["cpWord"];
 
-  require 'dbhandler.inc.php';
-  require 'testcodes.inc.php';
-
   if (isAnyInputEmptyReset($userName,$confirmPWord, $pWord) === true) {
     // set Some session variables for alert
     $_SESSION['res_type'] = "danger";
     $_SESSION['res-paword'] = "All fields must be filled";
-      header("location: ../resetpassword.php?error=emptyinpute");
+      header("location: ../resetpassword.php");
       exit();
   }
 
@@ -69,7 +77,7 @@ if(isset($_POST["submit"])){
     // set Some session variables for alert
       $_SESSION['res_type'] = "danger";
       $_SESSION['res-paword'] = "Passwords does not match";
-      header("location: ../resetpassword.php?error=passwordmismatch");
+      header("location: ../resetpassword.php");
       exit();
   }
 
@@ -77,11 +85,27 @@ if(isset($_POST["submit"])){
     // set Some session variables for alert
     $_SESSION['res_type'] = "danger";
     $_SESSION['res-paword'] = "No record of this user";
-      header("location: ../resetpassword.php?error=nouser");
+      header("location: ../resetpassword.php");
       exit();
   }
 
   resetpassword($conn, $userName, $pWord );
+
+
+}elseif (isset($_POST['add'])) {
+    $nameCourse = $_POST['course'];
+    $instructor = $_POST['instructor'];
+    $duration = $_POST['duration'];
+    $currentUserId = $_SESSION['id'];
+
+    if ($nameCourse === "default" || $instructor === "default"  || $duration === "default" ) {
+      $_SESSION['res_type'] = "danger";
+      $_SESSION['res-add'] = "You must select item for each field";
+        header("location: ../dashboard.php");
+        exit();
+    }
+
+    addCourse($conn, $nameCourse, $instructor, $duration, $currentUserId );
 
 }else {
   header("location: ../signup.php");

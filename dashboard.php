@@ -24,39 +24,39 @@
    <div class="row">
      <div class="col-md-4">
        <h3 class="text-center text-info">Add Course To Portfolio</h3>
-       <form action="index.html" method="post">
+       <form action="includes/signup.inc.php" method="post">
          <div class="form-group">
            <select class="form-control text-center" name="course">
-             <option class="text-center" value="">--Select A Course--</option>
-             <option value="">Java Backend Fundermentals</option>
-             <option value="">Java Backend Advanced Learners</option>
-             <option value="">Javascript For FrontEnd</option>
-             <option value="">Javascript For BackEnd</option>
-             <option value="">PHP Fundermentals</option>
-             <option value="">PHP Plus Laravel</option>
-             <option value="">Complete Bootstrap Course</option>
-             <option value="">Node.js Plus Express</option>
-             <option value="">Python BackEnd plus Django</option>
+             <option value="default">--Select A Course--</option>
+             <option value="Java Backend Fundermentals">Java Backend Fundermentals</option>
+             <option value="Java Backend Advanced Learners">Java Backend Advanced Learners</option>
+             <option value="Javascript For FrontEnd">Javascript For FrontEnd</option>
+             <option value="Javascript For BackEnd">Javascript For BackEnd</option>
+             <option value="PHP Fundermentals">PHP Fundermentals</option>
+             <option value="PHP Plus Laravel">PHP Plus Laravel</option>
+             <option value="Complete Bootstrap Course">Complete Bootstrap Course</option>
+             <option value="Node.js Plus Express">Node.js Plus Express</option>
+             <option value="Python BackEnd plus Django">Python BackEnd plus Django</option>
            </select>
          </div>
 
          <div class="form-group">
            <select class="form-control text-center" name="instructor">
-             <option class="text-center" value="">--Select Instructor--</option>
-             <option value="">Damilola Ige</option>
-             <option value="">Abbasikwere</option>
-             <option value="">Seun Xylus</option>
-             <option value="">Tosun</option>
-             <option value="">Tomiwa Ajayi</option>
+             <option value="default">--Select Instructor--</option>
+             <option value="Damilola Ige">Damilola Ige</option>
+             <option value="Abbasikwere">Abbasikwere</option>
+             <option value="Seun Xylus">Seun Xylus</option>
+             <option value="Tumosun">Tumosun</option>
+             <option value="Tomiwa Ajayi">Tomiwa Ajayi</option>
            </select>
          </div>
          <div class="form-group">
            <select class="form-control text-center" name="duration">
-             <option class="text-center" value="">--Select Duration--</option>
-             <option value="">3-Months</option>
-             <option value="">6-Months</option>
-             <option value="">9-Months</option>
-             <option value="">12-Months</option>
+             <option value="default">--Select Duration--</option>
+             <option value="3-Months">3-Months</option>
+             <option value="6-Months">6-Months</option>
+             <option value="9-Months">9-Months</option>
+             <option value="12-Months">12-Months</option>
            </select>
          </div>
          <div class="form-group">

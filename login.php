@@ -2,30 +2,15 @@
   include_once('includes/header.php')
  ?>
 
+ <!---Alart------------------>
+  <?php if (isset($_SESSION['response'])) { ?>
+    <div class="alert alert-<?= $_SESSION['res_type']; ?> alert-dismissible text-center">
+     <button type="button" class="close" data-dismiss="alert">&times;</button>
+     <?= $_SESSION['response']; ?>
+   </div>
+ <?php } unset($_SESSION['response']); unset($_SESSION['res_type']); ?>
+
 <main class="form-signin body-form">
-
-  <?php
-    if(isset($_GET["error"])){
-      $error = $_GET["error"];
-      switch ($error) {
-        case 'emptyinpute' :
-          echo "<p style='color: red; text-align: center'>All fields must be filed:)</p>";
-          break;
-
-        case 'nouser':
-          echo "<p style='color: red; text-align: center'>Sorry:) No such user</p>";
-          break;
-
-          case 'wrongauth':
-          echo "<p style='color: red; text-align: center'>Invalid email, username or password!</p>";
-          break;
-
-        default:
-          echo "<p style='color: red; text-align: center'>Error! Strange error.</p>";
-          break;
-      }
-    }
-   ?>
 
   <form action="includes/login.inc.php" method="post">
     <h1 class="h3 mb-3 fw-normal form-xtras">Sign In</h1>
