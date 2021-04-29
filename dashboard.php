@@ -70,7 +70,7 @@
 
        <?php
        // Query All courses registered by the current user using an inner join query
-           $sql = "SELECT usercourses.courseId, usercourses.courseName, usercourses.courseInstructor, usercourses.courseDuration
+           $sql = "SELECT DISTINCT usercourses.courseId, usercourses.courseName, usercourses.courseInstructor, usercourses.courseDuration
                     FROM usercourses
                     INNER JOIN users
                     ON usercourses.courseUserId =?";

@@ -150,7 +150,7 @@ function loginUserIn($conn, $userName, $pWord ){
  }
 
 function sendToDashBoard($userData){
-
+    $_SESSION['isUserLoggedIn'] = 1; //0 for false and 1 for true;
     $_SESSION["name"] = $userData["userFirstName"];
     $_SESSION["id"] = $userData["userId"];
 
