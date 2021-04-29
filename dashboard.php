@@ -70,13 +70,14 @@
 
        <?php
        // Query All courses registered by the current user using an inner join query
-           $sql = "SELECT DISTINCT usercourses.courseId, usercourses.courseName, usercourses.courseInstructor, usercourses.courseDuration
+           $activeUserId = $_SESSION['id'];
+           $sql = "SELECT DISTINCT usercourses.courseId, usercourses.coursName, usercourses.courseInstructor, usercourses.courseDuration
                     FROM usercourses
                     INNER JOIN users
                     ON usercourses.courseUserId =?";
 
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $_SESSION['id']);
+            $stmt->bind_param("i", $activeUserId );
             $stmt->execute();
             $qResult = $stmt->get_result();
 
@@ -96,30 +97,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>9</td>
-        <td>Node.js Plus Express</td>
-        <td>Abbasikwere</td>
-        <td>3-Moths</td>
-        <td>
-          <a href="#" class="btn btn-sm btn-success">Edit</a> &nbsp;
-          <a href="#" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this course?')">Delete</a>
-         </td>
-      </tr>
-      <tr>
-        <td>10</td>
-        <td>PHP BackEnd Fundermentals</td>
-        <td>Damilola Michael</td>
-        <td>6-Months</td>
-        <td>
-          <a href="#" class="btn btn-sm btn-success">Edit</a> &nbsp;
-          <a href="#" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this course?')">Delete</a>
-         </td>
-      </tr>
     <?php while ($courseRow = $qResult->fetch_assoc()) { ?>
       <tr>
         <td> <?= $courseRow['courseId'] ?> </td>
-        <td><?= $courseRow['courseName'] ?></td>
+        <td><?= $courseRow['coursName'] ?></td>
         <td><?= $courseRow['courseInstructor'] ?></td>
         <td><?= $courseRow['courseDuration'] ?></td>
         <td>

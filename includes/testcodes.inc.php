@@ -107,6 +107,7 @@ function saveUser($conn, $fName, $lName, $userName, $email, $pWord){
   $stmt = $conn->prepare($sql); // This gives an object called $stmt
   $stmt ->bind_param("sssss", $fName, $lName, $userName, $email, $encryptedPw);
   $stmt->execute();
+  addDefaultCourse($conn, $userName);
   loginUserIn($conn, $userName, $pWord );
 
 }
@@ -137,7 +138,7 @@ function loginUserIn($conn, $userName, $pWord ){
      $pWordEncrypeted =  $userDataorFalse["userpassword"];
      if (password_verify($pWord, $pWordEncrypeted )=== true) {
        // everything is in order hence, we start a session and login user
-       sendToDashBoard($userDataorFalse);
+       sendToDashBoard($userDataorFalse, $conn);
      }else {
        header("location: ../login.php?error=wrongauth");
        exit();
@@ -149,7 +150,8 @@ function loginUserIn($conn, $userName, $pWord ){
    }
  }
 
-function sendToDashBoard($userData){
+function sendToDashBoard($userData, $conn){
+    $conn->close(); // Since no more DB connection is needed, we close connection
     $_SESSION['isUserLoggedIn'] = 1; //0 for false and 1 for true;
     $_SESSION["name"] = $userData["userFirstName"];
     $_SESSION["id"] = $userData["userId"];
@@ -161,17 +163,19 @@ function sendToDashBoard($userData){
 
   }
 
-function addDefaultCourse($conn, $userName,){
+function addDefaultCourse($conn, $userName){
      $DefaultCourses = ["HTML For Web Development", "Basic CSS For Web"];
      foreach ($DefaultCourses as $course) {
+       $instructor = "Tomiwa Ajayi";
+       $duration = "2-Months";
        $userData = isUserExistPrior($userName, $conn, $userName);
        $userId = $userData["userId"];
        $query = "INSERT INTO usercourses (coursName, courseInstructor, courseDuration, courseUserId)
        VALUES(?,?,?,?)";
-       $stmt = $conn->prepare($query);
-       $stmt->bind_param("sssi", $course, "Tomiwa Ajayi", "2-Months", $userId);
-       $stmt->execute();
 
+       $stmtNow = $conn->prepare($query); // This gives an object called $stmt
+       $stmtNow ->bind_param("sssi", $course, $instructor, $duration, $userId);
+       $stmtNow->execute();
      }
 
  }

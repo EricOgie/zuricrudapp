@@ -41,7 +41,7 @@ if(isset($_POST["submit"])){
       exit();
   }
 
-  if (isUserExistPrior($userName, $conn, $email) === true) {
+  if (isUserExistPrior($userName, $conn, $email) !== false) {
       header("location: ../signup.php?error=takenuid");
       exit();
   }
