@@ -195,3 +195,28 @@ function addCourse($conn, $name, $Instructor, $duration, $userId ){
     exit();
 
 }
+
+function deleteCourse($conn, $courseId){
+  $sql = "DELETE FROM usercourses WHERE courseId=?";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("i", $courseId);
+  $stmt->execute();
+  $_SESSION['res_type'] = "success";
+  $_SESSION['res-add'] = "Course has been deleted from your portfolio!";
+  header("location: ../dashboard.php");
+  exit();
+
+}
+
+function editCourseDetails($conn, $courseId, $courseName, $instructor, $duration){
+  $sql = "UPDATE usercourses SET coursName=?, courseInstructor=?, courseDuration=? WHERE courseId=?";
+  $stmt =$conn->prepare($sql);
+  $stmt->bind_param("sssi", $courseName, $instructor, $duration, $courseId);
+  $stmt->execute();
+
+  $_SESSION['res_type'] = "success";
+  $_SESSION['res-add'] = "Changes made to your course have been updated!";
+  header("location: ../dashboard.php");
+  exit();
+
+}

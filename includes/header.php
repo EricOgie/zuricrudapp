@@ -22,7 +22,7 @@ session_start();
           <li id="home"><a href="index.php">HOME</a></li>
           <?php
              if ( $_SESSION["isUserLoggedIn"]=== 1) {
-              echo '<li id="contact"><a href="includes/mystudy.php">MY STUDY</a></li>';
+              echo '<li id="contact"><a href="dashboard.php">DASHBOARD</a></li>';
               echo '<li id="contact"><a href="includes/logout.inc.php">LOG OUT</a></li>';
 
             }else {

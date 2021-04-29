@@ -59,7 +59,9 @@ if(isset($_POST["submit"])){
 
   saveUser($conn, $fName, $lName, $userName, $email, $pWord);
 
-}elseif (isset($_POST["reset"])) {
+}
+
+if (isset($_POST["reset"])) {
 
   $userName = $_POST["uName"];
   $pWord = $_POST["pWord"];
@@ -91,8 +93,9 @@ if(isset($_POST["submit"])){
 
   resetpassword($conn, $userName, $pWord );
 
+}
 
-}elseif (isset($_POST['add'])) {
+if (isset($_POST['add'])) {
     $nameCourse = $_POST['course'];
     $instructor = $_POST['instructor'];
     $duration = $_POST['duration'];
@@ -107,7 +110,23 @@ if(isset($_POST["submit"])){
 
     addCourse($conn, $nameCourse, $instructor, $duration, $currentUserId );
 
-}else {
-  header("location: ../signup.php");
-  exit();
+}
+
+if (isset($_GET['delete'])) {
+  $courseId = $_GET['delete'];
+  deleteCourse($conn, $courseId);
+
+}
+
+if (isset($_POST['update'])) {
+
+  $nameCourse = $_POST['course'];
+  $instructor = $_POST['instructor'];
+  $duration = $_POST['duration'];
+  $courseId = $_SESSION['courseId'];
+
+  editCourseDetails($conn, $courseId, $nameCourse, $instructor, $duration);
+  unset($_SESSION['courseId']);
+
+
 }

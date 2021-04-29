@@ -23,11 +23,51 @@
    </div>
    <div class="row">
      <div class="col-md-4">
-       <h3 class="text-center text-info">Add Course To Portfolio</h3>
+       <?php
+       $addCourseTitle = "Add Course To Portfolio";
+       $durationDisplay = "--Select Course Duration--";
+       $display1 = "--Select Course --";
+       $display2 = "--Select Instructor--";
+
+       $courseName = "default";
+       $instruct = "default";
+       $duration = "default";
+       $text_type = "info";
+       $btn_type = "primary";
+       $btn_action_name = "add";
+       $btn_label = "Add Course To Portfolio";
+       $ABBITIARY_CONSTANT = 0000000;
+       $id = $ABBITIARY_CONSTANT;
+
+
+       if (isset($_GET['edit'])) {
+         $addCourseTitle = "Edit Course Details";
+         $courseName = $_GET['name'];
+         $display1 = $_GET['name'];
+
+         $instruct = $_GET['instructor'];
+         $display2 = $_GET['instructor'];
+
+         $duration = $_GET['duration'];
+         $durationDisplay = $_GET['duration'];
+
+         $btn_type = "success";
+         $btn_action_name = "update";
+         $btn_label = "Save Changes Made";
+         $text_type = "success";
+         $_SESSION['courseId'] = $_GET['edit'];
+
+
+       }
+
+        ?>
+       <h3 class="text-center text-<?= $text_type ?>"><?= $addCourseTitle ?></h3>
        <form action="includes/signup.inc.php" method="post">
          <div class="form-group">
+
            <select class="form-control text-center" name="course">
-             <option value="default">--Select A Course--</option>
+
+             <option value=<?= $courseName ?>><?= $display1 ?></option>
              <option value="Java Backend Fundermentals">Java Backend Fundermentals</option>
              <option value="Java Backend Advanced Learners">Java Backend Advanced Learners</option>
              <option value="Javascript For FrontEnd">Javascript For FrontEnd</option>
@@ -42,7 +82,8 @@
 
          <div class="form-group">
            <select class="form-control text-center" name="instructor">
-             <option value="default">--Select Instructor--</option>
+
+             <option value=<?= $instruct ?>><?= $display2 ?></option>
              <option value="Damilola Ige">Damilola Ige</option>
              <option value="Abbasikwere">Abbasikwere</option>
              <option value="Seun Xylus">Seun Xylus</option>
@@ -52,7 +93,7 @@
          </div>
          <div class="form-group">
            <select class="form-control text-center" name="duration">
-             <option value="default">--Select Duration--</option>
+             <option value=<?= $duration ?>><?= $durationDisplay ?></option>
              <option value="3-Months">3-Months</option>
              <option value="6-Months">6-Months</option>
              <option value="9-Months">9-Months</option>
@@ -60,7 +101,7 @@
            </select>
          </div>
          <div class="form-group">
-           <button class="btn btn-primary btn-block" type="submit" name="add">Add Course To Portfolio</button>
+           <button class="btn btn-<?= $btn_type ?> btn-block" type="submit" name=<?= $btn_action_name ?>><?= $btn_label ?></button>
          </div>
 
        </form>
@@ -104,8 +145,8 @@
         <td><?= $courseRow['courseInstructor'] ?></td>
         <td><?= $courseRow['courseDuration'] ?></td>
         <td>
-          <a href="#" class="btn btn-sm btn-success">Edit</a> &nbsp;
-          <a href="#" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this course?')">Delete</a>
+          <a href="dashboard.php?edit=<?= $courseRow['courseId'] ?>&name=<?= $courseRow['coursName'] ?>&instructor=<?= $courseRow['courseInstructor'] ?>&duration=<?= $courseRow['courseDuration'] ?>" class="btn btn-sm btn-success">Edit</a> &nbsp;
+          <a href="includes/signup.inc.php?delete=<?= $courseRow['courseId'] ?></a>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this course?')">Delete</a>
          </td>
       </tr>
     <?php } ?>
