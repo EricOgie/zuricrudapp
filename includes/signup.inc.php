@@ -115,18 +115,14 @@ if (isset($_POST['add'])) {
 if (isset($_GET['delete'])) {
   $courseId = $_GET['delete'];
   deleteCourse($conn, $courseId);
-
 }
 
 if (isset($_POST['update'])) {
-
   $nameCourse = $_POST['course'];
   $instructor = $_POST['instructor'];
   $duration = $_POST['duration'];
   $courseId = $_SESSION['courseId'];
-
   editCourseDetails($conn, $courseId, $nameCourse, $instructor, $duration);
   unset($_SESSION['courseId']);
-
 
 }

@@ -1,5 +1,6 @@
 
 <?php
+  $_SESSION['isUserLoggedIn'] = 0; //0 for false and 1 for true;
   include_once('includes/header.php')
  ?>
 

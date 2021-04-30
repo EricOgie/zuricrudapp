@@ -19,13 +19,14 @@ session_start();
         <ul class="nav navbar-nav navbar-right">
           <!-- 6 -->
 
-          <li id="home"><a href="index.php">HOME</a></li>
+          
           <?php
              if ( $_SESSION["isUserLoggedIn"]=== 1) {
               echo '<li id="contact"><a href="dashboard.php">DASHBOARD</a></li>';
               echo '<li id="contact"><a href="includes/logout.inc.php">LOG OUT</a></li>';
 
             }else {
+              echo '<li id="home"><a href="index.php">WELCOME</a></li>';
               echo '<li id="contact"><a href="signup.php">SIGN UP</a></li>';
               echo '<li id="contact"><a href="login.php">LOG IN</a></li>';
             }
