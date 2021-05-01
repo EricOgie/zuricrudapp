@@ -1,8 +1,9 @@
 <?php
 
 session_start();
-session_unset();
-// session_destroy();
-$_SESSION['isUserLoggedIn'] = 0;
+unset($_SESSION["name"]);
+unset($_SESSION["id"]);
+// session_unset();
 header("location: ../index.php");
 exit();
+

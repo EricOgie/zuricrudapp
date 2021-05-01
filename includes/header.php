@@ -21,7 +21,7 @@ session_start();
 
           
           <?php
-             if ( $_SESSION["isUserLoggedIn"]=== 1) {
+             if (isset($_SESSION["id"]) && isset($_SESSION["name"])) {
               echo '<li id="contact"><a href="dashboard.php">DASHBOARD</a></li>';
               echo '<li id="contact"><a href="includes/logout.inc.php">LOG OUT</a></li>';
 

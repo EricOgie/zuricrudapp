@@ -1,7 +1,15 @@
 <?php
+
   include_once('includes/header.php');
   include_once('includes/dbhandler.inc.php');
+
+  if (!isset($_SESSION["name"]) || !isset($_SESSION["id"])) {
+    header("location: index.php");
+    exit();
+  }
+
  ?>
+ 
  <div class="row greeting">
    <div class="col-md-4">
      <h2>Hello, <?php echo ''.$_SESSION["name"] ?></h2>

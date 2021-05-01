@@ -108,7 +108,9 @@ function saveUser($conn, $fName, $lName, $userName, $email, $pWord){
   $stmt ->bind_param("sssss", $fName, $lName, $userName, $email, $encryptedPw);
   $stmt->execute();
   addDefaultCourse($conn, $userName);
-  loginUserIn($conn, $userName, $pWord );
+  $userDataorFalse = isUserExistPrior($userName, $conn, $userName);
+  sendToDashBoard($userDataorFalse, $conn);
+  // loginUserIn($conn, $userName, $pWord );
 
 }
 
@@ -153,19 +155,19 @@ function loginUserIn($conn, $userName, $pWord ){
      exit();
    }
  }
+ 
 
 function sendToDashBoard($userData, $conn){
     $conn->close(); // Since no more DB connection is needed, we close connection
-    $_SESSION['isUserLoggedIn'] = 1; //0 for false and 1 for true;
     $_SESSION["name"] = $userData["userFirstName"];
     $_SESSION["id"] = $userData["userId"];
-
     if ($_SESSION["name"] !== null) {
       header("location: ../dashboard.php");
       exit();
     }
 
   }
+
 
 function addDefaultCourse($conn, $userName){
      $DefaultCourses = ["HTML For Web Development", "Basic CSS For Web"];
@@ -184,7 +186,8 @@ function addDefaultCourse($conn, $userName){
 
  }
 
-function addCourse($conn, $name, $Instructor, $duration, $userId ){
+
+ function addCourse($conn, $name, $Instructor, $duration, $userId ){
    $sql = "INSERT INTO usercourses(coursName,courseInstructor,courseDuration,courseUserId)
           VALUES(?,?,?,?)";
     $stmt = $conn->prepare($sql);
